@@ -1,3 +1,10 @@
+import Input from "./components/Input";
+
 export default function Home() {
-    return <h1>Welcome.</h1>;
+    return (
+        <div>
+            <h1>Welcome.</h1>
+            <Input />
+        </div>
+    );
 }
