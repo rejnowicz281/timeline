@@ -1,0 +1,60 @@
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+.repo {
+    position: relative;
+    display: flex;
+    width: 50%;
+}
+
+.repo-content {
+    padding: 15px 0;
+}
+
+.repo-flag {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background-color: rgb(255, 111, 111);
+    top: 50%;
+}
+
+/* styling for left-sided repos */
+
+.repo:nth-child(odd) {
+    align-self: flex-start;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-left: 2px;
+}
+
+.repo:nth-child(odd) > .repo-flag {
+    transform: translateX(11.5px);
+}
+
+.repo:nth-child(odd) > .repo-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    border-right: 2px solid black;
+    padding-right: 30px;
+}
+
+/* styling for right-sided repos */
+
+.repo:nth-child(even) {
+    align-self: flex-end;
+}
+
+.repo:nth-child(even) > .repo-flag {
+    transform: translateX(-11.5px);
+}
+
+.repo:nth-child(even) > .repo-content {
+    border-left: 2px solid black;
+    padding-left: 30px;
+}
