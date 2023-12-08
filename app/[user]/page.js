@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default async function UserPage({ params: { user } }) {
     const res = await fetch(`https://api.github.com/users/${user}/repos?per_page=1000`);
@@ -11,6 +12,7 @@ export default async function UserPage({ params: { user } }) {
 
     return (
         <div>
+            <Link href="/">Back</Link>
             <div>{data[0].owner.login}</div>
             <Image src={data[0].owner.avatar_url} width={300} height={300} alt="User Avatar" />
             <hr />
