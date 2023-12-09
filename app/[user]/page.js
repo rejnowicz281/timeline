@@ -1,23 +1,22 @@
+import fetchRepos from "@/actions/fetchRepos";
+import Repos from "@/components/Repos";
 import Image from "next/image";
 import Link from "next/link";
-import Repos from "./components/Repos";
 
 export default async function UserPage({ params: { user } }) {
-    const res = await fetch(`https://api.github.com/users/${user}/repos?per_page=1000`);
-    const data = await res.json();
+    const data = await fetchRepos(user, 1);
 
-    if (res.status === 404) return <div>User not found.</div>;
-    else if (!data.length) return <div>No repos found.</div>;
+    if (data.error) return <div>{data.error}</div>;
 
-    data.sort((a, b) => new Date(b.created_at) - new Date(a.created_at)); // Sort by date descending (newest first)
+    const { repos } = data;
 
     return (
         <div>
             <Link href="/">Back</Link>
-            <div>{data[0].owner.login}</div>
-            <Image src={data[0].owner.avatar_url} width={300} height={300} alt="User Avatar" />
+            <div>{repos[0].owner.login}</div>
+            <Image src={repos[0].owner.avatar_url} width={300} height={300} alt="User Avatar" />
             <hr />
-            <Repos repos={data} />
+            <Repos repos={repos} user={user} />
         </div>
     );
 }
