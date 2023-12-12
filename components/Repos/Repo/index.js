@@ -1,3 +1,4 @@
+import Link from "next/link";
 import css from "../index.module.css";
 
 export default function Repo({ repo }) {
@@ -10,6 +11,7 @@ export default function Repo({ repo }) {
                 {repo.language && <span> ({repo.language})</span>}
                 {repo.homepage && <span> ({repo.homepage})</span>}
                 {repo.description && <p>{repo.description}</p>}
+                <Link href={`/${repo.owner.login}/${repo.name}`}>Show Commit History</Link>
             </div>
         </div>
     );
