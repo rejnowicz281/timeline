@@ -1,10 +1,13 @@
 import Input from "@/components/Input";
+import css from "./page.module.css";
 
 export default function Home() {
     return (
-        <div>
-            <h1>Welcome.</h1>
-            <Input />
+        <div className={css.wrapper}>
+            <div class={css.container}>
+                <h1 className={css.header}>Generate a timeline for...</h1>
+                <Input />
+            </div>
         </div>
     );
 }
