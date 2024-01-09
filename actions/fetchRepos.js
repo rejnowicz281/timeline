@@ -3,7 +3,7 @@ export default async function fetchRepos(user, page) {
     const sort = "created";
     const direction = "desc";
 
-    const url = `https://api.github.com/users/${user}/repos?sort=${sort}&direction=${direction}&page=${page}&per_page=${per_page}`;
+    const url = `https://api.github.com/users/${user}/repos?sort=${sort}&direction=${direction}&page=${page}&per_page=${per_page}&type=owner`;
 
     try {
         const res = await fetch(url);

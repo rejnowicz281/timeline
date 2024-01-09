@@ -4,6 +4,7 @@ import fetchRepos from "@/actions/fetchRepos";
 import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import RepoList from "../RepoList";
+import css from "./index.module.css";
 
 export default function LoadMore({ user }) {
     const [page, setPage] = useState(1);
@@ -32,7 +33,11 @@ export default function LoadMore({ user }) {
     return (
         <>
             <RepoList repos={repos} />
-            {loading && <div ref={ref}>Loading...</div>}
+            {loading && (
+                <div className={css.loading} ref={ref}>
+                    Loading...
+                </div>
+            )}
         </>
     );
 }

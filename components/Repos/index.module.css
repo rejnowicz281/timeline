@@ -9,8 +9,27 @@
     width: 50%;
 }
 
+.repo-date {
+    color: rgb(255, 111, 111);
+}
+
 .repo-content {
     padding: 15px 0;
+    text-decoration: none;
+    color: inherit;
+}
+
+.repo-name {
+    margin: 10px 0;
+}
+
+.repo-content:hover .repo-name {
+    text-decoration: underline;
+}
+
+.repo-language {
+    font-size: 0.8em;
+    color: rgb(95, 95, 95);
 }
 
 .repo-flag {
@@ -60,6 +79,8 @@
 }
 
 .repo:nth-child(even) > .repo-content {
+    display: flex;
+    flex-direction: column;
     border-left: 2px solid rgb(95, 95, 95);
     padding-left: 30px;
 }
