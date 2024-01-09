@@ -7,7 +7,15 @@ import css from "./page.module.css";
 export default async function UserPage({ params: { user } }) {
     const reposData = await fetchRepos(user, 1);
 
-    if (reposData.error) return <div>{reposData.error}</div>;
+    if (reposData.error)
+        return (
+            <div class={css["error-wrapper"]}>
+                <div>
+                    <h1 className={css["error-header"]}>No user found. Try again for...</h1>
+                    <Input />
+                </div>
+            </div>
+        );
 
     const { repos } = reposData;
 

@@ -32,3 +32,24 @@
 .avatar-wrapper img {
     border-radius: 50%;
 }
+
+.error {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.error-wrapper {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+}
+
+.error-header {
+    margin-bottom: 10px;
+}

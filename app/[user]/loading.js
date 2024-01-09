@@ -1,3 +1,5 @@
-export default function Loading() {
-    return <div>Fetching user info...</div>;
+import Loading from "@/components/Loading";
+
+export default function PageLoading() {
+    return <Loading />;
 }
