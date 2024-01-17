@@ -17,6 +17,11 @@
     padding: 15px 0;
     text-decoration: none;
     color: inherit;
+    visibility: hidden;
+}
+
+.repo.visible > .repo-content {
+    visibility: visible;
 }
 
 .repo-name {
@@ -40,6 +45,11 @@
     background-color: rgb(255, 111, 111);
     top: 14px;
     transition: 0.1s;
+    opacity: 0;
+}
+
+.repo.visible > .repo-flag {
+    animation: fade-in 0.5s ease-in-out 1 forwards;
 }
 
 .repo-flag:hover {
@@ -68,6 +78,20 @@
     padding-right: 30px;
 }
 
+.repo:nth-child(odd).visible > .repo-content {
+    animation: left-slide-in 0.5s ease-in-out 1;
+}
+
+@keyframes left-slide-in {
+    0% {
+        opacity: 0;
+        transform: translateX(-50vh);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
 /* styling for right-sided repos */
 
 .repo:nth-child(even) {
@@ -83,4 +107,27 @@
     flex-direction: column;
     border-left: 2px solid rgb(95, 95, 95);
     padding-left: 30px;
+}
+
+.repo:nth-child(even).visible > .repo-content {
+    animation: right-slide-in 0.5s ease-in-out 1;
+}
+
+@keyframes right-slide-in {
+    0% {
+        opacity: 0;
+        transform: translateX(50vh);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
 }
