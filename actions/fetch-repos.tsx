@@ -1,4 +1,6 @@
-export default async function fetchRepos(user, page) {
+import { ReposData, ReposResult } from "@/types/repos";
+
+export default async function fetchRepos(user: string, page: number) {
     const per_page = 24;
     const sort = "created";
     const direction = "desc";
@@ -10,17 +12,17 @@ export default async function fetchRepos(user, page) {
 
         if (res.status === 404) return { error: "User not found." };
 
-        const data = await res.json();
+        const data: ReposData = await res.json();
 
         if (!data.length) return { error: "No repos found." };
 
-        const result = { repos: data };
+        const result: ReposResult = { repos: data };
 
         // Let the component know that there are no more repos to load to avoid unecessary API calls
         if (data.length < per_page) result.last = true;
 
         return result;
-    } catch (err) {
+    } catch (err: any) {
         return { error: err.message };
     }
 }

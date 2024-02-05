@@ -1,15 +1,20 @@
-import fetchRepos from "@/actions/fetchRepos";
-import Input from "@/components/Input";
-import Repos from "@/components/Repos";
+import fetchRepos from "@/actions/fetch-repos";
+import Input from "@/components/input";
+import Repos from "@/components/repos";
 import Image from "next/image";
+import { FC } from "react";
 import css from "./page.module.css";
 
-export default async function UserPage({ params: { user } }) {
+export type UserPageProps = {
+    params: { user: string };
+};
+
+const UserPage: FC<UserPageProps> = async ({ params: { user } }) => {
     const reposData = await fetchRepos(user, 1);
 
     if (reposData.error)
         return (
-            <div class={css["error-wrapper"]}>
+            <div className={css["error-wrapper"]}>
                 <div>
                     <h1 className={css["error-header"]}>No user found. Try again for...</h1>
                     <Input />
@@ -17,7 +22,7 @@ export default async function UserPage({ params: { user } }) {
             </div>
         );
 
-    const { repos } = reposData;
+    const repos = "repos" in reposData ? reposData.repos : [];
 
     return (
         <>
@@ -37,4 +42,6 @@ export default async function UserPage({ params: { user } }) {
             </div>
         </>
     );
-}
+};
+
+export default UserPage;

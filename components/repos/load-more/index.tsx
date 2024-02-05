@@ -1,15 +1,20 @@
 "use client";
 
-import fetchRepos from "@/actions/fetchRepos";
-import { useEffect, useState } from "react";
+import fetchRepos from "@/actions/fetch-repos";
+import { ReposData } from "@/types/repos";
+import { FC, useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
-import RepoList from "../RepoList";
+import RepoList from "../repo-list";
 import css from "./index.module.css";
 
-export default function LoadMore({ user }) {
-    const [page, setPage] = useState(1);
-    const [repos, setRepos] = useState([]);
-    const [loading, setLoading] = useState(true);
+export type LoadMoreProps = {
+    user: string;
+};
+
+const LoadMore: FC<LoadMoreProps> = ({ user }) => {
+    const [page, setPage] = useState<number>(1);
+    const [repos, setRepos] = useState<ReposData>([]);
+    const [loading, setLoading] = useState<boolean>(true);
 
     const { ref, inView } = useInView();
 
@@ -24,10 +29,10 @@ export default function LoadMore({ user }) {
 
         if (data.error) return setLoading(false);
 
-        if (data.last) setLoading(false); // Avoid unecessary API calls
+        if ("last" in data && data.last) setLoading(false); // Avoid unecessary API calls
         else setPage(page + 1);
 
-        setRepos([...repos, ...data.repos]);
+        if ("repos" in data) setRepos([...repos, ...data.repos]);
     };
 
     return (
@@ -40,4 +45,6 @@ export default function LoadMore({ user }) {
             )}
         </>
     );
-}
+};
+
+export default LoadMore;

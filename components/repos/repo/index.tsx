@@ -1,11 +1,16 @@
 "use client";
 
-import { formatDate } from "@/utils/formatDate";
-import { useEffect, useState } from "react";
+import { ReposData } from "@/types/repos";
+import { formatDate } from "@/utils/format-date";
+import { FC, useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import css from "../index.module.css";
 
-export default function Repo({ repo }) {
+export type RepoProps = {
+    repo: ReposData[0];
+};
+
+const Repo: FC<RepoProps> = ({ repo }) => {
     const { ref, inView } = useInView();
     const [visible, setVisible] = useState(false);
 
@@ -23,4 +28,6 @@ export default function Repo({ repo }) {
             </a>
         </div>
     );
-}
+};
+
+export default Repo;

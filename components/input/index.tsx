@@ -1,10 +1,10 @@
 import { redirect } from "next/navigation";
 import { AiOutlineLoading } from "react-icons/ai";
 import { MdDownloading } from "react-icons/md";
-import SubmitButton from "../SubmitButton";
+import SubmitButton from "../submit-button";
 import css from "./index.module.css";
 
-export default function Input() {
+const Input = () => {
     return (
         <form
             className={css.form}
@@ -30,4 +30,6 @@ export default function Input() {
             />
         </form>
     );
-}
+};
+
+export default Input;
