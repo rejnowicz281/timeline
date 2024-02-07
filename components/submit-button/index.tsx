@@ -4,7 +4,7 @@ import { FC, ReactNode } from "react";
 import { useFormStatus } from "react-dom";
 
 export type SubmitButtonProps = {
-    className: string;
+    className?: string;
     content: ReactNode | string;
     loading?: ReactNode | string;
 };

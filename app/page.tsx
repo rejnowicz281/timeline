@@ -1,13 +1,9 @@
-import Input from "@/components/input";
-import css from "./page.module.css";
+import InputBox from "@/components/input-box";
 
 const Home = () => {
     return (
-        <div className={css.wrapper}>
-            <div className={css.container}>
-                <h1 className={css.header}>Generate a timeline for...</h1>
-                <Input />
-            </div>
+        <div className="flex-1 flex flex-col items-center justify-center p-4">
+            <InputBox />
         </div>
     );
 };

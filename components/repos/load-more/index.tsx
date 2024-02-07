@@ -5,7 +5,6 @@ import { ReposData } from "@/types/repos";
 import { FC, useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import RepoList from "../repo-list";
-import css from "./index.module.css";
 
 export type LoadMoreProps = {
     user: string;
@@ -39,7 +38,7 @@ const LoadMore: FC<LoadMoreProps> = ({ user }) => {
         <>
             <RepoList repos={repos} />
             {loading && (
-                <div className={css.loading} ref={ref}>
+                <div className="font-bold my-5 text-center" ref={ref}>
                     Loading...
                 </div>
             )}

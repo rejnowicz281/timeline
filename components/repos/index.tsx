@@ -1,6 +1,5 @@
 import { ReposData } from "@/types/repos";
 import { FC } from "react";
-import css from "./index.module.css";
 import LoadMore from "./load-more";
 import RepoList from "./repo-list";
 
@@ -13,7 +12,7 @@ export type ReposProps = {
 
 const Repos: FC<ReposProps> = ({ repos, user }) => {
     return (
-        <div className={css.container}>
+        <div className="flex flex-col text-xl border-t-2 border-t-gray-500">
             <RepoList repos={repos} />
             <LoadMore user={user} />
         </div>

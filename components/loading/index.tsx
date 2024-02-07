@@ -1,9 +1,9 @@
-import css from "./index.module.css";
+import { VscLoading } from "react-icons/vsc";
 
-const Loading = () => {
+const Loading = ({ spinnerSize = "50px" }) => {
     return (
-        <div className={css.wrapper}>
-            <div className={css.loading}>Loading...</div>
+        <div className="flex-1 flex justify-center items-center">
+            <VscLoading style={{ fontSize: spinnerSize }} className="animate-spin" />
         </div>
     );
 };

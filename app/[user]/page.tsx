@@ -1,9 +1,9 @@
 import fetchRepos from "@/actions/fetch-repos";
-import Input from "@/components/input";
+import { default as InputBox } from "@/components/input-box";
 import Repos from "@/components/repos";
+import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { FC } from "react";
-import css from "./page.module.css";
 
 export type UserPageProps = {
     params: { user: string };
@@ -14,11 +14,9 @@ const UserPage: FC<UserPageProps> = async ({ params: { user } }) => {
 
     if (reposData.error)
         return (
-            <div className={css["error-wrapper"]}>
-                <div>
-                    <h1 className={css["error-header"]}>No user found. Try again for...</h1>
-                    <Input />
-                </div>
+            <div className="flex-1 flex flex-col gap-4 items-center justify-center p-4">
+                <h1 className="text-2xl">No user found. Try again...</h1>
+                <InputBox />
             </div>
         );
 
@@ -26,20 +24,27 @@ const UserPage: FC<UserPageProps> = async ({ params: { user } }) => {
 
     return (
         <>
-            <div className={css["input-wrapper"]}>
-                <Input />
+            <div className="flex justify-center items-center my-8">
+                <InputBox />
             </div>
-            <h1 className={css.header}>
-                <a href={`https://www.github.com/${user}`}>{user}</a>
-            </h1>
-            <div className={css["avatar-wrapper"]}>
+            <div className="text-center">
+                <Button asChild variant="link" className="text-5xl text-stone-300">
+                    <a href={`https://www.github.com/${user}`}>{user}</a>
+                </Button>
+            </div>
+            <div className="mt-6 mb-12 flex justify-center items-center">
                 <a href={`https://www.github.com/${user}`}>
-                    <Image src={repos[0].owner.avatar_url} width={300} height={300} alt="User Avatar" />
+                    <Image
+                        className="rounded-[50%] hover:opacity-80 transition-opacity"
+                        src={repos[0].owner.avatar_url}
+                        width={300}
+                        height={300}
+                        alt="User Avatar"
+                    />
                 </a>
             </div>
-            <div className={css["repos-wrapper"]}>
-                <Repos repos={repos} user={user} />
-            </div>
+
+            <Repos repos={repos} user={user} />
         </>
     );
 };
