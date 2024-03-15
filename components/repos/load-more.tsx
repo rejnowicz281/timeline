@@ -2,6 +2,7 @@
 
 import fetchRepos from "@/actions/fetch-repos";
 import { ReposData } from "@/types/repos";
+import { useSearchParams } from "next/navigation";
 import { FC, useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import RepoList from "./repo-list";
@@ -14,8 +15,16 @@ const LoadMore: FC<LoadMoreProps> = ({ user }) => {
     const [page, setPage] = useState<number>(1);
     const [repos, setRepos] = useState<ReposData>([]);
     const [loading, setLoading] = useState<boolean>(true);
+    const searchParams = useSearchParams();
 
     const { ref, inView } = useInView();
+
+    // Reset repos and page when searchParams change
+    useEffect(() => {
+        setRepos([]);
+        setPage(1);
+        setLoading(true);
+    }, [searchParams]);
 
     useEffect(() => {
         if (inView) loadMoreRepos();
@@ -23,8 +32,10 @@ const LoadMore: FC<LoadMoreProps> = ({ user }) => {
 
     const loadMoreRepos = async () => {
         const nextPage = page + 1;
+        const sort = searchParams.get("sort") === "created" || !searchParams.get("sort") ? "created" : "pushed";
+        const direction = searchParams.get("direction") === "desc" || !searchParams.get("direction") ? "desc" : "asc";
 
-        const data = await fetchRepos(user, nextPage);
+        const data = await fetchRepos(user, nextPage, sort, direction);
 
         if (data.error) return setLoading(false);
 
