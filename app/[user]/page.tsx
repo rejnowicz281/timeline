@@ -1,5 +1,5 @@
 import fetchRepos from "@/actions/fetch-repos";
-import { default as InputBox } from "@/components/input-box";
+import { default as InputBox } from "@/components/general/input-box";
 import Repos from "@/components/repos";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
@@ -28,7 +28,7 @@ const UserPage: FC<UserPageProps> = async ({ params: { user } }) => {
                 <InputBox />
             </div>
             <div className="text-center">
-                <Button asChild variant="link" className="text-5xl text-stone-300">
+                <Button asChild variant="link" className="text-5xl dark:text-stone-300">
                     <a href={`https://www.github.com/${user}`}>{user}</a>
                 </Button>
             </div>

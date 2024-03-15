@@ -1,9 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { AiOutlineLoading } from "@react-icons/all-files/ai/AiOutlineLoading";
+import { MdDownloading } from "@react-icons/all-files/md/MdDownloading";
 import { redirect } from "next/navigation";
-import { AiOutlineLoading } from "react-icons/ai";
-import { MdDownloading } from "react-icons/md";
-import SubmitButton from "../submit-button";
+import SubmitButton from "./submit-button";
 
 const InputBox = () => {
     return (
@@ -17,17 +17,20 @@ const InputBox = () => {
                 if (username) redirect(`/${username}`);
             }}
         >
-            <Input type="text" placeholder="Type in username here..." name="username" id="username" />
+            <Input
+                type="text"
+                placeholder="Type in username here..."
+                className="text-center"
+                name="username"
+                id="username"
+            />
 
-            <Button
-                className="flex items-center gap-2 text-lg bg-neutral-800 hover:bg-neutral-700 border-gray-700"
-                asChild
-            >
+            <Button variant="ghost" className="flex items-center gap-2 text-lg" asChild>
                 <SubmitButton
                     loading={
                         <>
                             <AiOutlineLoading className="animate-spin" />
-                            Generating Timeline...
+                            Generate Timeline
                         </>
                     }
                     content={

@@ -1,6 +1,6 @@
 import { ReposData } from "@/types/repos";
 import { FC } from "react";
-import Repo from "../repo";
+import Repo from "./repo";
 
 export type RepoListProps = {
     repos: ReposData;

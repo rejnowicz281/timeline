@@ -1,4 +1,4 @@
-import InputBox from "@/components/input-box";
+import InputBox from "@/components/general/input-box";
 
 const Home = () => {
     return (

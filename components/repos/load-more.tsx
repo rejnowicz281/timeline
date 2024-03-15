@@ -4,7 +4,7 @@ import fetchRepos from "@/actions/fetch-repos";
 import { ReposData } from "@/types/repos";
 import { FC, useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
-import RepoList from "../repo-list";
+import RepoList from "./repo-list";
 
 export type LoadMoreProps = {
     user: string;

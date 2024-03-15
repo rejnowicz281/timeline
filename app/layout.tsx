@@ -1,3 +1,7 @@
+import ThemeButton from "@/components/general/theme-button";
+import { ThemeProvider } from "@/providers/theme-provider";
+import clsx from "clsx";
+import { GeistSans } from "geist/font/sans";
 import { Metadata } from "next";
 import "./globals.css";
 
@@ -13,7 +17,12 @@ const RootLayout = ({
 }>) => {
     return (
         <html className="h-full" lang="en">
-            <body className="min-h-full flex flex-col bg-zinc-850 text-white text-xl">{children}</body>
+            <body className={clsx("min-h-full flex flex-col", GeistSans.className)}>
+                <ThemeProvider attribute="class" defaultTheme="dark" disableTransitionOnChange>
+                    <ThemeButton />
+                    {children}
+                </ThemeProvider>
+            </body>
         </html>
     );
 };
