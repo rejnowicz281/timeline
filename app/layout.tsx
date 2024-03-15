@@ -3,6 +3,7 @@ import { ThemeProvider } from "@/providers/theme-provider";
 import clsx from "clsx";
 import { GeistSans } from "geist/font/sans";
 import { Metadata } from "next";
+import NextTopLoader from "nextjs-toploader";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -18,6 +19,7 @@ const RootLayout = ({
     return (
         <html className="h-full" lang="en">
             <body className={clsx("min-h-full flex flex-col", GeistSans.className)}>
+                <NextTopLoader height={4} showSpinner={false} />
                 <ThemeProvider attribute="class" defaultTheme="dark" disableTransitionOnChange>
                     <ThemeButton />
                     {children}

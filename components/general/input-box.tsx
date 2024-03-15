@@ -25,7 +25,7 @@ const InputBox = () => {
                 id="username"
             />
 
-            <Button variant="ghost" className="flex items-center gap-2 text-lg" asChild>
+            <Button variant="ghost" className="flex items-center gap-2 text-md" asChild>
                 <SubmitButton
                     loading={
                         <>

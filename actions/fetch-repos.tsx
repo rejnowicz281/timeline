@@ -1,9 +1,12 @@
 import { ReposData, ReposResult } from "@/types/repos";
 
-export default async function fetchRepos(user: string, page: number) {
+export default async function fetchRepos(
+    user: string,
+    page: number,
+    sort: undefined | "pushed" | "created" = "created",
+    direction: undefined | "asc" | "desc" = "desc"
+) {
     const per_page = 24;
-    const sort = "created";
-    const direction = "desc";
 
     const url = `https://api.github.com/users/${user}/repos?sort=${sort}&direction=${direction}&page=${page}&per_page=${per_page}&type=owner`;
 
