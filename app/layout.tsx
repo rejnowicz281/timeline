@@ -20,7 +20,7 @@ const RootLayout = ({
         <html className="h-full" lang="en">
             <body className={clsx("min-h-full flex flex-col", GeistSans.className)}>
                 <NextTopLoader height={4} showSpinner={false} />
-                <ThemeProvider attribute="class" defaultTheme="dark" disableTransitionOnChange>
+                <ThemeProvider attribute="class" defaultTheme="dark">
                     <ThemeButton />
                     {children}
                 </ThemeProvider>
