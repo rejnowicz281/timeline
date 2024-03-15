@@ -51,7 +51,7 @@ const Repo: FC<RepoProps> = ({ repo }) => {
                         </div>
                     )}
 
-                    {!repo.description && (
+                    {repo.description && (
                         <div className="text-sm text-gray-500 [transition:opacity_1s,transform_600ms] opacity-0 group-odd/repo:-translate-x-full group-even/repo:translate-x-full group-[.visible]/repo:opacity-100 group-[:nth-child(odd).visible]/repo:-translate-x-0 group-[:nth-child(even).visible]/repo:translate-x-0">
                             {repo.description}
                         </div>
