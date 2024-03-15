@@ -16,7 +16,7 @@ export default function ThemeButton() {
 
     return (
         <Button
-            className="fixed top-4 right-4 text-xl"
+            className="z-20 fixed top-4 right-4 text-xl"
             variant="outline"
             onClick={() => {
                 if (theme === "light") setTheme("dark");
