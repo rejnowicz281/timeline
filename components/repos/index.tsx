@@ -12,7 +12,7 @@ export type ReposProps = {
 
 const Repos: FC<ReposProps> = ({ repos, user }) => {
     return (
-        <div className="flex flex-col text-xl border-t-2 border-t-gray-500">
+        <div className="overflow-hidden flex flex-col text-xl border-t-2 border-t-gray-500">
             <RepoList repos={repos} />
             <LoadMore user={user} />
         </div>
