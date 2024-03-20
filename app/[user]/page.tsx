@@ -21,9 +21,9 @@ const UserPage: FC<UserPageProps> = async ({ params: { user }, searchParams }) =
     const sort = searchParams.sort === "created" || !searchParams.sort ? "created" : "pushed";
     const direction = searchParams.direction === "desc" || !searchParams.direction ? "desc" : "asc";
 
-    const reposData = await fetchRepos(user, 1, sort, direction);
+    const data = await fetchRepos(user, 1, sort, direction);
 
-    if (reposData.error)
+    if ("error" in data)
         return (
             <div className="flex-1 flex flex-col gap-4 items-center justify-center p-4">
                 <h1 className="text-2xl">No user found. Try again...</h1>
@@ -31,7 +31,7 @@ const UserPage: FC<UserPageProps> = async ({ params: { user }, searchParams }) =
             </div>
         );
 
-    const repos = "repos" in reposData ? reposData.repos : [];
+    const { repos, last } = data;
 
     return (
         <>
@@ -86,7 +86,7 @@ const UserPage: FC<UserPageProps> = async ({ params: { user }, searchParams }) =
                     </Button>
                 )}
             </div>
-            <Repos repos={repos} user={user} />
+            <Repos repos={repos} user={user} last={last} />
         </>
     );
 };

@@ -5,7 +5,7 @@ export default async function fetchRepos(
     page: number,
     sort: undefined | "pushed" | "created" = "created",
     direction: undefined | "asc" | "desc" = "desc"
-) {
+): Promise<ReposResult | { error: string }> {
     const per_page = 24;
 
     const url = `https://api.github.com/users/${user}/repos?sort=${sort}&direction=${direction}&page=${page}&per_page=${per_page}&type=owner`;
@@ -19,10 +19,11 @@ export default async function fetchRepos(
 
         if (!data.length) return { error: "No repos found." };
 
-        const result: ReposResult = { repos: data };
-
         // Let the component know that there are no more repos to load to avoid unecessary API calls
-        if (data.length < per_page) result.last = true;
+        const result: ReposResult = (() => {
+            if (data.length === per_page) return { repos: data, last: false };
+            return { repos: data, last: true };
+        })();
 
         return result;
     } catch (err: any) {

@@ -37,9 +37,9 @@ const LoadMore: FC<LoadMoreProps> = ({ user }) => {
 
         const data = await fetchRepos(user, nextPage, sort, direction);
 
-        if (data.error) return setLoading(false);
+        if ("error" in data) return setLoading(false);
 
-        if ("last" in data && data.last) setLoading(false); // Avoid unecessary API calls
+        if (data.last) setLoading(false); // Avoid unecessary API calls
         else setPage(page + 1);
 
         if ("repos" in data) setRepos([...repos, ...data.repos]);
