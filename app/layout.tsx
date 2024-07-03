@@ -18,7 +18,7 @@ const RootLayout = ({
 }>) => {
     return (
         <html className="h-full" lang="en">
-            <body className={clsx("min-h-full flex flex-col", GeistSans.className)}>
+            <body className={clsx("min-h-full dark:bg-[#121212] flex flex-col", GeistSans.className)}>
                 <NextTopLoader height={4} showSpinner={false} />
                 <ThemeProvider attribute="class" defaultTheme="dark">
                     <ThemeButton />
