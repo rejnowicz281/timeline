@@ -27,7 +27,7 @@ const Repo: FC<RepoProps> = ({ repo }) => {
             )}
         >
             <a
-                href={repo.html_url}
+                href={repo.homepage || repo.html_url}
                 className="z-10 group-even/repo:translate-x-[-11.5px] group-odd/repo:translate-x-[11.5px] absolute w-6 h-6 rounded-[50%] bg-red-500 top-8 opacity-0 [transition:opacity_1s,background_150ms] hover:bg-red-300 group-[.visible]/repo:opacity-100"
             ></a>
             <a
