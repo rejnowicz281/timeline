@@ -11,9 +11,9 @@ export default async function fetchRepos(
     try {
         if (!username) return { error: "No username provided." };
 
-        const per_page = 5;
+        const perPage = 24;
 
-        const url = `https://api.github.com/users/${username}/repos?sort=${sort}&direction=${direction}&page=${page}&per_page=${per_page}&type=owner`;
+        const url = `https://api.github.com/users/${username}/repos?sort=${sort}&direction=${direction}&page=${page}&per_page=${perPage}&type=owner`;
 
         const res = await fetch(url);
 
@@ -24,7 +24,7 @@ export default async function fetchRepos(
 
         // Let the component know that there are no more repos to load to avoid unecessary API calls
         const result: ReposResult = (() => {
-            if (data.length === per_page) return { repos: data, last: false };
+            if (data.length === perPage) return { repos: data, last: false };
             return { repos: data, last: true };
         })();
 
