@@ -51,11 +51,11 @@ export default function TimelinePage() {
             const res = await fetch(url);
 
             if (res.status === 404) throw finishProgressAndReturnError("User not found.");
+            if (res.status === 403) throw finishProgressAndReturnError("API rate limit exceeded.");
 
             const data: ReposData = await res.json();
 
-            if ("message" in data || !data.length)
-                throw finishProgressAndReturnError("User has no public repositories.");
+            if (!data.length) throw finishProgressAndReturnError("User has no public repositories.");
 
             console.log("Fetch Repos Success - Fetched", data.length, "Repos");
 
