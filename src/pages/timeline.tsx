@@ -63,6 +63,7 @@ export default function TimelinePage() {
 
             return data;
         },
+        // @ts-ignore
         getNextPageParam: (lastPage, allPages, lastPageParam) => {
             return lastPage.length === REPOS_PER_PAGE ? lastPageParam + 1 : undefined;
         }
