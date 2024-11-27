@@ -1,18 +1,20 @@
 import { Button } from "@/components/ui/button";
 import { DirectionType, SortType } from "@/pages/timeline";
-import { CalendarFold, ChevronDown, ChevronUp, PencilLine } from "lucide-react";
+import { CalendarFold, ChevronDown, ChevronUp, LoaderCircle, PencilLine } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export default function TimelineHeader({
     username,
     avatarUrl,
     sort,
-    direction
+    direction,
+    loading
 }: {
     username: string;
-    avatarUrl: string;
+    avatarUrl?: string;
     sort: SortType;
     direction: DirectionType;
+    loading: boolean;
 }) {
     return (
         <>
@@ -23,13 +25,19 @@ export default function TimelineHeader({
             </div>
             <div className="mt-6 mb-12 flex justify-center items-center">
                 <a href={`https://www.github.com/${username}`}>
-                    <img
-                        className="rounded-[50%] hover:opacity-80 transition-opacity"
-                        src={avatarUrl}
-                        width={300}
-                        height={300}
-                        alt="User Avatar"
-                    />
+                    {loading ? (
+                        <div className="bg-zinc-900 w-[300px] h-[300px] rounded-[50%] flex items-center justify-center">
+                            <LoaderCircle className="animate-spin" size={50} />
+                        </div>
+                    ) : (
+                        <img
+                            className="rounded-[50%] hover:opacity-80 transition-opacity"
+                            src={avatarUrl}
+                            width={300}
+                            height={300}
+                            alt="User Avatar"
+                        />
+                    )}
                 </a>
             </div>
             <div className="flex flex-row justify-center mb-10">
