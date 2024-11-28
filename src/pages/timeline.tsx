@@ -46,8 +46,6 @@ export default function TimelinePage() {
 
             const data: ReposData = await res.json();
 
-            if (!data.length) throw new Error("User has no public repositories.");
-
             console.log("Fetch Repos Success - Fetched", data.length, "Repos");
 
             setProgress(100);
@@ -67,7 +65,7 @@ export default function TimelinePage() {
 
     const repos = data ? data.flat() : [];
     const isLoadingMore = isLoading || (size > 0 && data && typeof data[size - 1] === "undefined");
-    const isEmpty = data?.[0]?.length === 0;
+    const isEmpty = repos.length === 0;
     const isReachingEnd = isEmpty || (data && data[data.length - 1]?.length < REPOS_PER_PAGE);
 
     useEffect(() => {
@@ -83,6 +81,14 @@ export default function TimelinePage() {
                 An error has occured while fetching the data: {error.message}
             </div>
         );
+
+    if (repos.length === 0 && !isLoading) {
+        return (
+            <div className="text-center text-sm text-gray-500">
+                No repositories found for <span className="font-bold">{username}</span>.
+            </div>
+        );
+    }
 
     return (
         <>
