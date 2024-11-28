@@ -1,6 +1,5 @@
 import TimelineHeader from "@/components/pages/timeline/header";
 import Repos from "@/components/pages/timeline/repos";
-import { useInfiniteQuery } from "@tanstack/react-query";
 
 import { REPOS_PER_PAGE } from "@/lib/config";
 import { ReposData } from "@/lib/types/repos";
@@ -9,6 +8,7 @@ import { CircleDashed } from "lucide-react";
 import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import { useLocation, useParams } from "react-router-dom";
+import useSWRInfinite from "swr/infinite";
 import HomePage from "./home";
 
 export type SortType = "created" | "pushed";
@@ -29,33 +29,24 @@ export default function TimelinePage() {
 
     const { ref, inView } = useInView();
 
-    const finishProgressAndReturnError = (message: string) => {
-        setProgress(100);
-        return new Error(message);
-    };
-
-    const query = useInfiniteQuery({
-        queryKey: ["timeline", username, sort, direction],
-        initialPageParam: 1,
-        retry: false,
-        refetchOnMount: false,
-        refetchOnReconnect: false,
-        refetchOnWindowFocus: false,
-        queryFn: async ({ pageParam }) => {
+    const { data, size, setSize, isValidating, isLoading, error } = useSWRInfinite(
+        (page) =>
+            `https://api.github.com/users/${username}/repos?sort=${sort}&direction=${direction}&page=${
+                page + 1
+            }&per_page=${REPOS_PER_PAGE}&type=owner`,
+        async (url) => {
             setProgress(30);
 
-            if (!username) throw finishProgressAndReturnError("No username provided.");
-
-            const url = `https://api.github.com/users/${username}/repos?sort=${sort}&direction=${direction}&page=${pageParam}&per_page=${REPOS_PER_PAGE}&type=owner`;
+            if (!username) throw new Error("No username provided.");
 
             const res = await fetch(url);
 
-            if (res.status === 404) throw finishProgressAndReturnError("User not found.");
-            if (res.status === 403) throw finishProgressAndReturnError("API rate limit exceeded.");
+            if (res.status === 404) throw new Error("User not found.");
+            if (res.status === 403) throw new Error("API rate limit exceeded.");
 
             const data: ReposData = await res.json();
 
-            if (!data.length) throw finishProgressAndReturnError("User has no public repositories.");
+            if (!data.length) throw new Error("User has no public repositories.");
 
             console.log("Fetch Repos Success - Fetched", data.length, "Repos");
 
@@ -63,40 +54,47 @@ export default function TimelinePage() {
 
             return data;
         },
-        // @ts-ignore
-        getNextPageParam: (lastPage, allPages, lastPageParam) => {
-            return lastPage.length === REPOS_PER_PAGE ? lastPageParam + 1 : undefined;
+        {
+            initialSize: 1,
+            onError: () => {
+                setProgress(100);
+            },
+            revalidateFirstPage: false,
+            revalidateOnFocus: true,
+            revalidateOnReconnect: false
         }
-    });
+    );
+
+    const repos = data ? data.flat() : [];
+    const isLoadingMore = isLoading || (size > 0 && data && typeof data[size - 1] === "undefined");
+    const isEmpty = data?.[0]?.length === 0;
+    const isReachingEnd = isEmpty || (data && data[data.length - 1]?.length < REPOS_PER_PAGE);
 
     useEffect(() => {
-        if (inView && query.hasNextPage && !query.isLoading && !query.isFetching && !query.isFetchingNextPage)
-            query.fetchNextPage();
+        if (inView && !isLoadingMore && !isLoading && !isValidating && !isReachingEnd) setSize(size + 1);
     }, [inView]);
 
     // This should never happen
     if (!username) return <HomePage />;
 
-    if (query.isError || query.error)
+    if (error)
         return (
             <div className="text-center text-sm text-gray-500">
-                An error has occured while fetching the data: {query.error.message}
+                An error has occured while fetching the data: {error.message}
             </div>
         );
-
-    const repos = query.data?.pages.flat();
 
     return (
         <>
             <TimelineHeader
-                loading={query.isLoading}
-                avatarUrl={repos && repos[0].owner.avatar_url}
+                loading={isLoading}
+                avatarUrl={(repos.length > 0 && repos[0].owner.avatar_url) || ""}
                 username={username}
                 sort={sort}
                 direction={direction}
             />
             {repos && <Repos repos={repos} />}
-            {query.hasNextPage && (
+            {!isReachingEnd && (
                 <div ref={ref} className="font-bold flex justify-center gap-4 items-center my-5 text-center">
                     Loading repositories... <CircleDashed size={20} className="animate-spin" />
                 </div>
