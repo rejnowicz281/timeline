@@ -31,11 +31,13 @@ export default function TimelinePage() {
 
     const { data, size, setSize, isValidating, isLoading, error } = useSWRInfinite(
         (page) =>
-            `https://api.github.com/users/${username}/repos?sort=${sort}&direction=${direction}&page=${
+            `https://api.github.com/users/${username}/repos?sort=${sort}&direction=${direction}&per_page=${REPOS_PER_PAGE}&type=owner&page=${
                 page + 1
-            }&per_page=${REPOS_PER_PAGE}&type=owner`,
+            }`,
         async (url) => {
-            setProgress(30);
+            const isFirstPage = url.endsWith("1");
+
+            if (isFirstPage) setProgress(30);
 
             if (!username) throw new Error("No username provided.");
 
@@ -48,7 +50,7 @@ export default function TimelinePage() {
 
             console.log("Fetch Repos Success - Fetched", data.length, "Repos");
 
-            setProgress(100);
+            if (isFirstPage) setProgress(100);
 
             return data;
         },

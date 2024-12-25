@@ -14,7 +14,7 @@ export function LoadingBarProvider({ children }: { children: ReactNode }) {
 
     return (
         <LoadingBarContext.Provider value={{ progress, setProgress }}>
-            <LoadingBar height={4} progress={progress} waitingTime={400} />
+            <LoadingBar height={1} progress={progress} waitingTime={400} color="white" />
             {children}
         </LoadingBarContext.Provider>
     );
